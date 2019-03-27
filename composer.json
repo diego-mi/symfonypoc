@@ -15,7 +15,8 @@
         "symfony/framework-bundle": "*",
         "symfony/maker-bundle": "^1.0@dev",
         "symfony/orm-pack": "dev-master",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "ext-json": "*"
     },
     "config": {
         "preferred-install": {
