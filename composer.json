@@ -13,6 +13,7 @@
         "symfony/dotenv": "*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
+        "symfony/maker-bundle": "^1.0@dev",
         "symfony/orm-pack": "dev-master",
         "symfony/yaml": "*"
     },
