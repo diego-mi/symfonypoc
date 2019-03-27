@@ -1,3 +1,38 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# MEDICOS
+medicos_findAll:
+  path: /medicos
+  controller: App\Controller\MedicosController::findAll
+  methods:
+    - GET
+
+medicos_findById:
+  path: /medicos/{id}
+  controller: App\Controller\MedicosController::findById
+  methods:
+    - GET
+
+medicos_remove:
+  path: /medicos/{id}
+  controller: App\Controller\MedicosController::remove
+  methods:
+    - DELETE
+
+# ESPECIALIDADES
+
+especialidades_findAll:
+  path: /especialidades
+  controller: App\Controller\EspecialidadesController::findAll
+  methods:
+    - GET
+
+especialidades_findById:
+  path: /especialidades/{id}
+  controller: App\Controller\EspecialidadesController::findById
+  methods:
+    - GET
+
+especialidades_remove:
+  path: /especialidades/{id}
+  controller: App\Controller\EspecialidadesController::remove
+  methods:
+    - DELETE
