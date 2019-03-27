@@ -7,7 +7,7 @@ use JsonSerializable;
 /**
  * Class Medico
  * @package App\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\MedicoRepository")
  */
 class Medico implements JsonSerializable
 {
