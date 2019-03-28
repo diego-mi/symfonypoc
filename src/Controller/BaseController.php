@@ -1,7 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Helper\EntidadeFactory;
+use App\Helper\EntityFactory\IEntidadeFactory;
+use App\Helper\Request\FiltersAndPaginationRequest;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,33 +21,52 @@ abstract class BaseController extends AbstractController
      */
     protected $entityManager;
     /**
-     * @var EntidadeFactory
+     * @var IEntidadeFactory
      */
     protected $factory;
+    /**
+     * @var FiltersAndPaginationRequest
+     */
+    protected $filtersAndPaginationRequest;
 
     /**
      * BaseController constructor.
      * @param ObjectRepository $repository
      * @param EntityManagerInterface $entityManager
-     * @param EntidadeFactory $factory
+     * @param IEntidadeFactory $factory
+     * @param FiltersAndPaginationRequest $filtersAndPaginationRequest
      */
     protected function __construct(
         ObjectRepository $repository,
         EntityManagerInterface $entityManager,
-        EntidadeFactory $factory
+        IEntidadeFactory $factory,
+        FiltersAndPaginationRequest $filtersAndPaginationRequest
     )
     {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
         $this->factory = $factory;
+        $this->filtersAndPaginationRequest = $filtersAndPaginationRequest;
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
-    public function findAll(): JsonResponse
+    public function findAll(Request $request): JsonResponse
     {
-        return new JsonResponse($this->repository->findAll());
+        $orderByParams = $this->filtersAndPaginationRequest->getOrderParams($request);
+        $searchByParams = $this->filtersAndPaginationRequest->getFiltersParams($request);
+        $paginationParams = $this->filtersAndPaginationRequest->getPaginationParams($request);
+
+        $list = $this->repository->findBy(
+            $searchByParams,
+            $orderByParams,
+            $paginationParams['perPage'],
+            $paginationParams['offset']
+        );
+
+        return new JsonResponse($list);
     }
 
     /**

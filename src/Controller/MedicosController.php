@@ -2,7 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Medico;
-use App\Helper\MedicoFactory;
+use App\Helper\Request\FiltersAndPaginationRequest;
+use App\Helper\EntityFactory\MedicoFactory;
 use App\Repository\MedicoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,14 +17,16 @@ class MedicosController extends BaseController
      * @param EntityManagerInterface $entityManager
      * @param MedicoFactory $medicoFactory
      * @param MedicoRepository $medicoRepository
+     * @param FiltersAndPaginationRequest $filtersAndPaginationRequest
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         MedicoFactory $medicoFactory,
-        MedicoRepository $medicoRepository
+        MedicoRepository $medicoRepository,
+        FiltersAndPaginationRequest $filtersAndPaginationRequest
     )
     {
-        parent::__construct($medicoRepository, $entityManager, $medicoFactory);
+        parent::__construct($medicoRepository, $entityManager, $medicoFactory, $filtersAndPaginationRequest);
     }
 
     /**

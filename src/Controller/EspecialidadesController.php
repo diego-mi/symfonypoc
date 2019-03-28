@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Especialidade;
-use App\Helper\EspecialidadeFactory;
+use App\Helper\EntityFactory\EspecialidadeFactory;
+use App\Helper\Request\FiltersAndPaginationRequest;
 use App\Repository\EspecialidadeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,14 +15,16 @@ class EspecialidadesController extends BaseController
      * @param EntityManagerInterface $entityManager
      * @param EspecialidadeRepository $especialidadeRepository
      * @param EspecialidadeFactory $factory
+     * @param FiltersAndPaginationRequest $filtersAndPaginationRequest
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         EspecialidadeRepository $especialidadeRepository,
-        EspecialidadeFactory $factory
+        EspecialidadeFactory $factory,
+        FiltersAndPaginationRequest $filtersAndPaginationRequest
     )
     {
-        parent::__construct($especialidadeRepository, $entityManager, $factory);
+        parent::__construct($especialidadeRepository, $entityManager, $factory, $filtersAndPaginationRequest);
     }
 
     /**

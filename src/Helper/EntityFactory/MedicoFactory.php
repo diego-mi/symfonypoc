@@ -1,10 +1,10 @@
 <?php
-namespace App\Helper;
+namespace App\Helper\EntityFactory;
 
 use App\Entity\Medico;
 use App\Repository\EspecialidadeRepository;
 
-class MedicoFactory implements EntidadeFactory
+class MedicoFactory implements IEntidadeFactory
 {
 
     /**

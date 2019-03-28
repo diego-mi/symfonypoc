@@ -1,9 +1,9 @@
 <?php
-namespace App\Helper;
+namespace App\Helper\EntityFactory;
 
 use App\Entity\Especialidade;
 
-class EspecialidadeFactory implements EntidadeFactory
+class EspecialidadeFactory implements IEntidadeFactory
 {
 
     /**
