@@ -3,12 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Especialidade;
+use App\Helper\EspecialidadeFactory;
 use App\Repository\EspecialidadeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class EspecialidadesController extends BaseController
 {
@@ -16,50 +13,23 @@ class EspecialidadesController extends BaseController
      * MedicosController constructor.
      * @param EntityManagerInterface $entityManager
      * @param EspecialidadeRepository $especialidadeRepository
+     * @param EspecialidadeFactory $factory
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        EspecialidadeRepository $especialidadeRepository
+        EspecialidadeRepository $especialidadeRepository,
+        EspecialidadeFactory $factory
     )
     {
-        parent::__construct($especialidadeRepository, $entityManager);
+        parent::__construct($especialidadeRepository, $entityManager, $factory);
     }
 
     /**
-     * @Route("/especialidades", methods="POST")
-     * @param Request $request
-     * @return Response
+     * @param Especialidade $entidadeExistente
+     * @param Especialidade $entidadeRecebida
      */
-    public function nova(Request $request): Response
+    public function updateEntity($entidadeExistente, $entidadeRecebida): void
     {
-        $corpoRequisicao = $request->getContent();
-        $dadosEmJson = json_decode($corpoRequisicao);
-
-        $especialidade = new Especialidade();
-        $especialidade->setDescricao($dadosEmJson->descricao);
-
-        $this->entityManager->persist($especialidade);
-        $this->entityManager->flush();
-
-        return new JsonResponse($especialidade);
-    }
-
-    /**
-     * @Route("/especialidades/{id}", methods={"PUT"})
-     * @param int $id
-     * @param Request $request
-     * @return Response
-     */
-    public function atualiza(int $id, Request $request): Response
-    {
-        $corpoRequisicao = $request->getContent();
-        $dadosEmJson = json_decode($corpoRequisicao);
-
-        $especialidade = $this->repository->find($id);
-        $especialidade->setDescricao($dadosEmJson->descricao);
-
-        $this->entityManager->flush();
-
-        return new JsonResponse($especialidade);
+        $entidadeExistente->setDescricao($entidadeRecebida->getDescricao());
     }
 }
